@@ -9,3 +9,11 @@ export default {
   name: 'App',
 };
 </script>
+
+<style>
+/* Background fixo para todo o sistema */
+body {
+  background: url(public/images/StarWarsBackground.png);
+  height: 100vh;
+}
+</style>

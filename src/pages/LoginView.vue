@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <h1>Login View</h1>
-    <input v-model="email" type="email" placeholder="Digite seu e-mail">
-    <button @click="goToNextPage" :disabled="!isEmailValid">Próximo</button>
-    <p v-if="emailError">{{ emailError }}</p>
+  <div class="login-container">
+    <img src="/images/LogoStarWars.png" alt="Logo" class="logo">
+    <div class="login-card">
+      <h1>Olá!</h1>
+      <h3>Para começar seu teste, digite um e-mail:</h3>
+      <input type="email" v-model="email" placeholder="exemplo@email.com" @input="validateEmail">
+      <p v-if="emailError" class="error-message">{{ emailError }}</p>
+      <button @click="goToNextPage" :disabled="!isEmailValid">Próximo</button>
+    </div>
   </div>
 </template>
 
@@ -11,27 +15,87 @@
 export default {
   data() {
     return {
-      email: '',
+      email: "",
       isEmailValid: false,
-      emailError: '',
+      emailError: ""
     };
   },
   methods: {
     validateEmail() {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.isEmailValid = regex.test(this.email);
-      this.emailError = this.isEmailValid ? '' : 'E-mail inválido!';
+      this.emailError = this.isEmailValid ? "" : "E-mail inválido!";
     },
     goToNextPage() {
       if (this.isEmailValid) {
-        this.$router.push('/busca');
+        this.$router.push("/busca"); // Navega para a tela de busca
       }
-    },
-  },
-  watch: {
-    email(newEmail) {
-      this.validateEmail();
-    },
-  },
+    }
+  }
 };
 </script>
+
+<style>
+/* Estilização do container */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 50px;
+}
+
+/* Card do login */
+.login-card {
+  background: #232323;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 410px;
+  height: 244px;
+  text-align: left;
+}
+
+/* Input */
+input {
+  width: 362px;
+  padding: 10px;
+  margin: 10px 0;
+  background: #232323;
+  border: 1px solid #FFE81F4D;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #CECECE;
+}
+
+/* Mensagem de erro */
+.error-message {
+  color: #CECECE;
+  font-size: 14px;
+}
+
+/* Botão */
+button {
+  background: #FFE81F;
+  color: #20182B;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 362px;
+  font-size: 16px;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+</style>
