@@ -8,30 +8,43 @@
         type="email" 
         v-model="email" 
         placeholder="exemplo@email.com" 
-        @input="validateEmail"
-        :class="{'valid-input': isEmailValid, 'invalid-input': email !== '' && !isEmailValid}"
+        @input="validarEmail"
+        :class="{'campo-valido': emailValido, 'campo-invalido': email !== '' && !emailValido}"
       >
-      <button @click="goToNextPage" :disabled="!isEmailValid">Próximo</button>
+      <!-- Usando o componente de botão -->
+      <CustomButton 
+        texto="Próximo" 
+        :desativado="!emailValido"
+        @clicado="irParaProximaPagina"
+      />
     </div>
   </div>
 </template>
 
+
 <script>
+
+import CustomButton from '../components/CustomButton.vue';
+
+
 export default {
+  components: {
+    CustomButton
+  },
   data() {
     return {
       email: "",
-      isEmailValid: false,
+      emailValido: false,
     };
   },
   methods: {
-    validateEmail() {
+      validarEmail() {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      this.isEmailValid = regex.test(this.email);
+      this.emailValido = regex.test(this.email);
     },
-    goToNextPage() {
-      if (this.isEmailValid) {
-        this.$router.push("/busca"); // Navega para a tela de busca
+    irParaProximaPagina() {
+      if (this.emailValido) {
+        this.$router.push("/busca");
       }
     }
   }
@@ -79,11 +92,6 @@ input {
 /* Borda quando inválido */
 .invalid-input {
   border: 1px solid red;
-}
-
-/* Borda quando válido */
-.valid-input {
-  border: 1px solid #FFE81F; /* Cor igual à do botão */
 }
 
 /* Botão */
