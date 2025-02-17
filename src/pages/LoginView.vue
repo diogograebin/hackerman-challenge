@@ -4,8 +4,13 @@
     <div class="login-card">
       <h1>Olá!</h1>
       <h3>Para começar seu teste, digite um e-mail:</h3>
-      <input type="email" v-model="email" placeholder="exemplo@email.com" @input="validateEmail">
-      <p v-if="emailError" class="error-message">{{ emailError }}</p>
+      <input 
+        type="email" 
+        v-model="email" 
+        placeholder="exemplo@email.com" 
+        @input="validateEmail"
+        :class="{'valid-input': isEmailValid, 'invalid-input': email !== '' && !isEmailValid}"
+      >
       <button @click="goToNextPage" :disabled="!isEmailValid">Próximo</button>
     </div>
   </div>
@@ -17,14 +22,12 @@ export default {
     return {
       email: "",
       isEmailValid: false,
-      emailError: ""
     };
   },
   methods: {
     validateEmail() {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.isEmailValid = regex.test(this.email);
-      this.emailError = this.isEmailValid ? "" : "E-mail inválido!";
     },
     goToNextPage() {
       if (this.isEmailValid) {
@@ -35,9 +38,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Estilização do container */
-
 .login-container {
   display: flex;
   flex-direction: column;
@@ -50,15 +52,13 @@ export default {
 /* Card do login */
 .login-card {
   background: #232323;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left;
   width: 410px;
   height: 244px;
   text-align: left;
@@ -76,18 +76,22 @@ input {
   color: #CECECE;
 }
 
-/* Mensagem de erro */
-.error-message {
-  color: #CECECE;
-  font-size: 14px;
+/* Borda quando inválido */
+.invalid-input {
+  border: 1px solid red;
+}
+
+/* Borda quando válido */
+.valid-input {
+  border: 1px solid #FFE81F; /* Cor igual à do botão */
 }
 
 /* Botão */
 button {
   background: #FFE81F;
-  color: #20182B;
+  color: #232323;
   padding: 10px;
-  border: none;
+  border: #ccc;
   border-radius: 8px;
   cursor: pointer;
   width: 362px;
@@ -95,7 +99,9 @@ button {
 }
 
 button:disabled {
-  background: #ccc;
+  background: #232323;
   cursor: not-allowed;
+  border: 1px solid #ccc;
+  color: #ccc;
 }
 </style>
