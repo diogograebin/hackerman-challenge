@@ -64,7 +64,7 @@ export default {
 
 /* Card do login */
 .login-card {
-  background: #232323;
+  background: var(--cor-background-cards);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -82,11 +82,15 @@ input {
   width: 362px;
   padding: 10px;
   margin: 10px 0;
-  background: #232323;
-  border: 1px solid #FFE81F4D;
+  background: var(--cor-background-cards);
+  border: 1px solid var(--cor-borda-input);
   border-radius: 5px;
   font-size: 16px;
-  color: #CECECE;
+  color: var(--cor-textos);
+}
+
+input:focus {
+    outline: none; /* Remove a borda de foco */
 }
 
 /* Borda quando inválido */
@@ -96,10 +100,10 @@ input {
 
 /* Botão */
 button {
-  background: #FFE81F;
-  color: #232323;
+  background: var(--cor-backgorund-botoes);
+  color: var(--cor-background-cards);
   padding: 10px;
-  border: #ccc;
+  border: var(--cor-textos);
   border-radius: 8px;
   cursor: pointer;
   width: 362px;
@@ -109,7 +113,7 @@ button {
 button:disabled {
   background: #232323;
   cursor: not-allowed;
-  border: 1px solid #ccc;
-  color: #ccc;
+  border: 1px solid var(--cor-textos);
+  color: var(--cor-textos);
 }
 </style>

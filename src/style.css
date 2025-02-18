@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+:root{
+  --cor-background-cards: #232323;
+  --cor-backgorund-botoes: #FFE81F;
+  --cor-textos: #ccc;
+  --cor-borda-input: #FFE81F4D;
+  --cor-error: #C47768;
+
+}
+
 body{ 
   background: url('images/StarWarsBackground.png') no-repeat center center fixed;
   background-size: cover;
