@@ -74,7 +74,6 @@ export default {
   text-align: left;
   width: 410px;
   height: 244px;
-  text-align: left;
 }
 
 /* Input */
