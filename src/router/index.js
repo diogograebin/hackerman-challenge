@@ -1,10 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router";
-import SearchView from "@/pages/SearchView.vue";
-import ResultView from "@/pages/ResultView.vue";
+import LoginView from "../pages/LoginView.vue"; // Usando caminho relativo
+import SearchView from "../pages/SearchView.vue";
+import ResultView from "../pages/ResultView.vue";
 
 const routes = [
-  { path: "/", component: SearchView },
-  { path: "/result/:name", component: ResultView },
+  {
+    path: '/',
+    name: 'login',
+    component: LoginView,
+  },
+  {
+    path: '/busca',
+    name: 'search',
+    component: SearchView,
+  },
+  {
+    path: '/resultado',
+    name: 'result',
+    component: ResultView,
+  },
 ];
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router';  // Aqui importamos o router configurado
+import router from './router/index'; // Se o arquivo estiver na pasta router
 import "/src/style.css";
 
 createApp(App)

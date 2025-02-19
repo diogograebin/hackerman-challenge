@@ -18,9 +18,15 @@
                 @clicado="fetchCharacterData"
             />
         </div>
-        <div v-if="loading" class="loading-card">
-            <p>Carregando...</p>
-            <img src="/images/IconeStormTrooper.png" alt="Ícone de Carregamento" />
+        <div v-if="loading" class="loading-card" :class="{ 'fade-in': loading, 'fade-out': !loading }">
+            <h2>Carregando...</h2>
+            <img 
+                src="/images/IconeStormTrooper.png" 
+                alt="Ícone de Carregamento" 
+                class="loading-image"
+                v-if="loading"
+            />
+
         </div>
     </div>
 </template>
@@ -37,6 +43,7 @@ export default {
             characterName: "",
             loading: false,
             error: null,
+            characterData: null
         };
     },
     methods: {
@@ -48,8 +55,10 @@ export default {
             this.error = null;
 
             try {
+                console.log("Buscando personagem:", this.characterName);
                 const response = await fetch(`https://swapi.dev/api/people/?search=${this.characterName}`);
                 const data = await response.json();
+                console.log("Resposta da API:", data);
 
                 if (data.count > 0) {
                     const character = data.results[0];
@@ -62,15 +71,20 @@ export default {
                         species: await this.fetchDetails(character.species),
                     };
 
-                    // Redireciona para ResultView passando os dados do personagem
-                    this.$router.push({ name: 'ResultView', params: { characterData } });
+                    localStorage.setItem('characterData', JSON.stringify(characterData));
+                    this.$router.push({ name: 'result' }); // Redireciona para ResultView
+
+                    
                 } else {
                     this.error = "Personagem inválido";
                 }
             } catch (err) {
+                console.error("Erro ao buscar dados:", err);
                 this.error = "Erro ao buscar dados. Tente novamente.";
             } finally {
-                this.loading = false;
+                setTimeout(() => {
+                    this.loading = false; // ✅ Desativa depois de um pequeno delay
+                }, 500);
             }
         },
         async fetchDetails(urls) {
@@ -127,9 +141,29 @@ input:focus {
     border: 1px solid var(--cor-error); /* Cor de erro */
 }
 
-.loading {
-    color: #FFE81F;
-} 
+.loading-card{
+    width: 410px;
+    height: 149px;
+    border-radius: 8px;
+    background-color: var(--cor-background-cards);
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.loading-image {
+    opacity: 0;
+    animation: fadeInOut 1.5s infinite ease-in-out; /* Repete indefinidamente */
+}
 
 .error {
     text-align: left; 
