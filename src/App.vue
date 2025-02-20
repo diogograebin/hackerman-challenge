@@ -13,7 +13,7 @@ export default {
 <style>
 /* Background fixo para todo o sistema */
 body {
-  background: url(public/images/StarWarsBackground.png);
+  background: url(/images/StarWarsBackground.png);
   height: 100vh;
 }
 </style>
